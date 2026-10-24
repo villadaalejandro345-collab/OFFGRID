@@ -1,0 +1,466 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>OFFGRID</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Concepto: una cuadrícula técnica con una pieza que se sale de ella (off grid). Oscuro, blanco hueso, un azul señal. */
+:root {
+  --ink: #0b0d10;
+  --panel: #14181d;
+  --line: #262c34;
+  --bone: #f4f3ee;
+  --mute: #98a0aa;
+  --signal: #2f54ff;
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body: "Archivo", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* FONDO PROPIO: reemplaza none por url("data:image/jpeg;base64,...") o por la ruta de tu imagen */
+  --fondo: none;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--ink); z-index: 30; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+.wrap { max-width: 1240px; margin: 0 auto; }
+
+/* Cabecera */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--ink); border-bottom: 1px solid var(--line); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))) calc(-1 * max(16px, env(safe-area-inset-right, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+.mark { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: .06em; text-decoration: none; }
+.top nav { display: flex; gap: 22px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+.top nav a { text-decoration: none; color: var(--mute); }
+.top nav a:hover { color: var(--bone); }
+.cart-btn { display: inline-flex; align-items: center; gap: 10px; background: transparent; border: 1px solid var(--line); padding: 8px 14px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+.cart-btn:hover { border-color: var(--bone); }
+.cart-btn b { background: var(--signal); color: #fff; min-width: 22px; height: 22px; display: inline-grid; place-items: center; font-weight: 500; }
+
+/* Banner */
+.banner { position: relative; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))) calc(-1 * max(16px, env(safe-area-inset-right, 0px))); overflow: hidden; background: var(--ink); }
+.banner-bg { position: absolute; inset: 0; background-image: var(--fondo); background-size: cover; background-position: center; }
+.banner-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,13,16,.55), rgba(11,13,16,.8)); }
+.track { position: relative; display: flex; transition: transform .7s cubic-bezier(.65,0,.25,1); touch-action: pan-y; }
+.slide { flex: 0 0 100%; min-width: 0; height: clamp(440px, 74vh, 640px); position: relative; display: flex; align-items: center; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); overflow: hidden; }
+.slide-in { width: 100%; max-width: 1240px; margin: 0 auto; position: relative; z-index: 2; }
+.slide::before { content: ""; position: absolute; inset: 0; z-index: 1; background-image: linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px); background-size: 56px 56px; -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 55%, transparent 100%); mask-image: linear-gradient(90deg, #000 0%, #000 55%, transparent 100%); }
+.slide.azul { background: var(--signal); }
+.slide.azul::before { background-image: linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--mute); margin: 0 0 18px; }
+.azul .eyebrow { color: rgba(255,255,255,.8); }
+.slide h2 { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .86; letter-spacing: .005em; margin: 0; font-size: clamp(56px, 11.5vw, 168px); text-wrap: balance; color: #fff; }
+.slide h2 em { font-style: normal; display: block; -webkit-text-stroke: 2px #fff; color: transparent; }
+.slide p.sub { max-width: 46ch; margin: 28px 0 0; font-size: 18px; color: rgba(255,255,255,.86); }
+.slide .cta { display: inline-block; margin-top: 30px; background: #fff; color: var(--ink); font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .12em; padding: 14px 22px; text-decoration: none; }
+.slide .cta:hover { background: var(--bone); }
+.slide.logo { justify-content: center; }
+.slide.logo .slide-in { text-align: center; }
+.slide.logo h2 { font-size: clamp(64px, 22vw, 330px); line-height: .8; letter-spacing: .02em; }
+.slide.logo .eyebrow { margin-top: 26px; margin-bottom: 0; color: rgba(255,255,255,.7); }
+.ctrl { position: absolute; z-index: 5; bottom: 22px; left: 0; right: 0; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); pointer-events: none; }
+.ctrl .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.dots { display: flex; gap: 8px; pointer-events: auto; }
+.dot { width: 44px; height: 4px; padding: 0; border: 0; background: rgba(255,255,255,.35); position: relative; overflow: hidden; }
+.dot i { position: absolute; inset: 0; background: #fff; transform: scaleX(0); transform-origin: left; }
+.dot.on i { animation: fill 5.5s linear forwards; }
+.banner.paused .dot.on i { animation-play-state: paused; }
+@keyframes fill { to { transform: scaleX(1); } }
+.arrows { display: flex; gap: 8px; pointer-events: auto; }
+.arrows button { width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.5); background: rgba(11,13,16,.35); font-size: 18px; line-height: 1; }
+.arrows button:hover { background: #fff; color: var(--ink); }
+
+/* Catálogo */
+.catalog { padding-block: 72px 40px; }
+.cat-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px 32px; margin-bottom: 32px; }
+.cat-head h3 { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 6vw, 72px); line-height: .9; text-transform: uppercase; margin: 0; }
+.cat-head p { margin: 8px 0 0; color: var(--mute); max-width: 52ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { background: transparent; border: 1px solid var(--line); padding: 8px 16px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+.chip:hover { border-color: var(--mute); }
+.chip[aria-pressed="true"] { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 28px 20px; }
+.card { min-width: 0; display: flex; flex-direction: column; }
+.pic { aspect-ratio: 4 / 5; max-width: 100%; background-color: var(--panel); background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 28px 28px; display: grid; place-items: center; position: relative; overflow: hidden; }
+.pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pic svg { width: 72%; height: auto; transition: transform .35s ease; filter: drop-shadow(0 14px 18px rgba(0,0,0,.45)); }
+.card:hover .pic svg { transform: translate(6px, -6px) rotate(-1.5deg); }
+.tag { position: absolute; top: 10px; left: 10px; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; background: var(--ink); padding: 4px 8px; color: var(--mute); }
+.info { padding-top: 14px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.name { font-weight: 600; font-size: 16px; margin: 0; min-width: 0; }
+.price { font-family: var(--mono); font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.add { margin-top: auto; background: var(--signal); color: #fff; border: 0; padding: 12px 16px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; }
+.add:hover { background: #4a6bff; }
+
+/* Franja de confianza */
+.band { border-block: 1px solid var(--line); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))) calc(-1 * max(16px, env(safe-area-inset-right, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); margin-top: 48px; }
+.band .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.band .item { padding: 28px 24px 28px 0; min-width: 0; }
+.band .item + .item { border-left: 1px solid var(--line); padding-left: 24px; }
+.band h4 { font-family: var(--display); font-weight: 800; font-size: 26px; text-transform: uppercase; margin: 0 0 4px; line-height: 1; }
+.band p { margin: 0; color: var(--mute); font-size: 15px; }
+@media (max-width: 640px) { .band .item + .item { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; } .top nav { display: none; } }
+
+footer { padding-block: 48px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: end; }
+footer .big { font-family: var(--display); font-weight: 900; font-size: clamp(48px, 9vw, 96px); line-height: .8; letter-spacing: .04em; }
+footer p { margin: 0; color: var(--mute); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+
+/* Carrito */
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 40; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 41; width: min(100%, 420px); background: var(--panel); border-left: 1px solid var(--line); display: flex; flex-direction: column; padding: calc(20px + env(safe-area-inset-top, 0px)) calc(20px + env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) 20px; gap: 16px; }
+.drawer header { display: flex; justify-content: space-between; align-items: center; }
+.drawer h3 { font-family: var(--display); font-size: 32px; font-weight: 900; text-transform: uppercase; margin: 0; }
+.x { background: transparent; border: 1px solid var(--line); width: 40px; height: 40px; font-size: 18px; }
+.lines { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.line { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 14px; }
+.line .th { width: 64px; aspect-ratio: 1; background: var(--ink); display: grid; place-items: center; }
+.line .th svg { width: 80%; }
+.line .th img { width: 100%; height: 100%; object-fit: cover; }
+.line .t { min-width: 0; }
+.line .t b { display: block; font-weight: 600; font-size: 14px; }
+.line .t span { font-family: var(--mono); font-size: 12px; color: var(--mute); }
+.qty { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; }
+.qty button { width: 28px; height: 28px; background: transparent; border: 1px solid var(--line); }
+.empty { color: var(--mute); text-align: center; margin: auto; max-width: 28ch; }
+.tot { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 15px; }
+.pay-note { margin: 0; font-size: 13px; color: var(--mute); }
+.checkout { display: block; text-align: center; text-decoration: none; background: #20b858; color: #fff; padding: 14px; font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; }
+.checkout:hover { background: #159447; }
+.checkout[aria-disabled="true"] { background: var(--line); color: var(--mute); pointer-events: none; }
+.checkout-list { display: grid; gap: 8px; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); background: var(--bone); color: var(--ink); font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; padding: 12px 18px; opacity: 0; transition: .3s; z-index: 50; pointer-events: none; max-width: calc(100% - 32px); }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) { .track, .pic svg, .toast { transition: none; } .dot.on i { animation: none; transform: scaleX(1); } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#inicio" aria-label="OFFGRID, inicio">OFFGRID</a>
+    <nav aria-label="Principal">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#envios">Pago y envíos</a>
+    </nav>
+    <button class="cart-btn" id="openCart" type="button" aria-label="Abrir carrito">Carrito <b id="count">0</b></button>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="banner" id="banner" aria-roledescription="carrusel" aria-label="Destacados OFFGRID">
+    <div class="banner-bg" aria-hidden="true"></div>
+    <div class="track" id="track">
+      <div class="slide" aria-roledescription="diapositiva" aria-label="1 de 3">
+        <div class="slide-in">
+          <p class="eyebrow">Camisetas · Colección OFFGRID</p>
+          <h2>El mejor estilo y calidad <em>por el menor precio</em></h2>
+          <a class="cta" href="#catalogo">Ver camisetas</a>
+        </div>
+      </div>
+      <div class="slide azul" aria-roledescription="diapositiva" aria-label="2 de 3">
+        <div class="slide-in">
+          <p class="eyebrow">Compra sin riesgo</p>
+          <h2>Pago contra <em>entrega</em></h2>
+          <p class="sub">Pides hoy, recibes en tu puerta, revisas tu camiseta y pagas al recibirla.</p>
+          <a class="cta" href="#catalogo">Elegir la mía</a>
+        </div>
+      </div>
+      <div class="slide logo" aria-roledescription="diapositiva" aria-label="3 de 3">
+        <div class="slide-in">
+          <h2>OFFGRID</h2>
+          <p class="eyebrow">Ropa para salirse de la cuadrícula</p>
+        </div>
+      </div>
+    </div>
+    <div class="ctrl">
+      <div class="wrap">
+        <div class="dots" id="dots"></div>
+        <div class="arrows">
+          <button type="button" id="prev" aria-label="Anterior">←</button>
+          <button type="button" id="next" aria-label="Siguiente">→</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="catalog wrap" id="catalogo">
+    <div class="cat-head">
+      <div>
+        <h3>Catálogo</h3>
+        <p>Inventario limitado: cada camiseta ya tiene su talla definida. Agrega las que te gusten al carrito y confirma tu pedido por WhatsApp.</p>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por tipo"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="band" id="envios">
+    <div class="wrap">
+      <div class="item"><h4>Pago contra entrega</h4><p>No pagas por adelantado. Pagas cuando tu pedido llega.</p></div>
+      <div class="item"><h4>Calidad que se nota</h4><p>Algodón suave, costuras reforzadas y estampados que no se desvanecen.</p></div>
+      <div class="item"><h4>Precio directo</h4><p>Sin intermediarios, por eso el precio es el más bajo.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="big">OFFGRID</div>
+  <p>Pedidos por WhatsApp<br>321 771 5774 · 321 887 7276</p>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Carrito">
+  <header>
+    <h3>Tu pedido</h3>
+    <button class="x" id="closeCart" type="button" aria-label="Cerrar carrito">✕</button>
+  </header>
+  <div class="lines" id="lines"></div>
+  <div class="tot"><span>Total</span><b id="total">$0</b></div>
+  <p class="pay-note">Pagas en efectivo o transferencia cuando recibes tu pedido.</p>
+  <div class="checkout-list">
+    <a class="checkout" id="checkout1" href="#" target="_blank" rel="noopener" aria-disabled="true">Pedir al WhatsApp · 321 771 5774</a>
+    <a class="checkout" id="checkout2" href="#" target="_blank" rel="noopener" aria-disabled="true">Pedir al WhatsApp · 321 887 7276</a>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// Números de WhatsApp de la tienda (código de país + número, sin + ni espacios)
+var WHATSAPP_1 = "573217715774";
+var WHATSAPP_2 = "573218877276";
+
+// Para usar una foto real en un producto, agrega img: "enlace o data:image..." a su línea.
+var PRODUCTS = [
+  { id: 1, img: "images/product-01.jpg", name: "Negra Esencial", cat: "Básicas", price: 90000, color: "#15181c", ink: "#f4f3ee", art: "logo" },
+  { id: 2, img: "images/product-02.jpg", name: "Blanca Clásica", cat: "Básicas", price: 90000, color: "#ecebe6", ink: "#0b0d10", art: "logo" },
+  { id: 3, img: "images/product-03.jpg", name: "Señal", cat: "Estampadas", price: 90000, color: "#15181c", ink: "#2f54ff", art: "grid" },
+  { id: 4, img: "images/product-04.jpg", name: "Azul Noche", cat: "Básicas", price: 90000, color: "#1c2a4a", ink: "#f4f3ee", art: "none" },
+  { id: 5, img: "images/product-05.jpg", name: "Arena", cat: "Básicas", price: 90000, color: "#c9b89a", ink: "#0b0d10", art: "logo" },
+  { id: 6, img: "images/product-06.jpg", name: "Fuera de Mapa", cat: "Estampadas", price: 90000, color: "#ecebe6", ink: "#2f54ff", art: "grid" },
+  { id: 7, img: "images/product-07.jpg", name: "Verde Militar", cat: "Básicas", price: 90000, color: "#3c4a37", ink: "#f4f3ee", art: "none" },
+  { id: 8, img: "images/product-08.jpg", name: "Gris Humo", cat: "Básicas", price: 90000, color: "#6d7276", ink: "#f4f3ee", art: "logo" },
+  { id: 9, img: "images/product-09.jpg", name: "Órbita", cat: "Estampadas", price: 90000, color: "#15181c", ink: "#f4f3ee", art: "circle" },
+  { id: 10, img: "images/product-10.jpg", name: "Rojo Ladrillo", cat: "Básicas", price: 90000, color: "#8a3b2e", ink: "#f4f3ee", art: "none" },
+  { id: 11, img: "images/product-11.jpg", name: "Franja Blanca", cat: "Estampadas", price: 90000, color: "#1c2a4a", ink: "#f4f3ee", art: "stripe" },
+  { id: 12, img: "images/product-12.jpg", name: "Hueso", cat: "Básicas", price: 90000, color: "#dcd6c6", ink: "#0b0d10", art: "logo" },
+  { id: 13, img: "images/product-13.jpg", name: "Cuadrícula Gris", cat: "Estampadas", price: 90000, color: "#6d7276", ink: "#f4f3ee", art: "grid" },
+  { id: 14, img: "images/product-14.jpg", name: "Negra Lisa", cat: "Básicas", price: 90000, color: "#0f1114", ink: "#f4f3ee", art: "none" },
+  { id: 15, img: "images/product-15.jpg", name: "Eclipse", cat: "Estampadas", price: 90000, color: "#ecebe6", ink: "#0b0d10", art: "circle" },
+  { id: 16, img: "images/product-16.jpg", name: "Azul Rey", cat: "Básicas", price: 90000, color: "#2f54ff", ink: "#f4f3ee", art: "logo" },
+  { id: 17, img: "images/product-17.jpg", name: "Franja Arena", cat: "Estampadas", price: 90000, color: "#c9b89a", ink: "#0b0d10", art: "stripe" },
+  { id: 18, img: "images/product-18.jpg", name: "Verde Bosque", cat: "Básicas", price: 90000, color: "#24372c", ink: "#f4f3ee", art: "logo" },
+  { id: 19, img: "images/product-19.jpg", name: "Mostaza", cat: "Básicas", price: 90000, color: "#c79a2b", ink: "#0b0d10", art: "none" },
+  { id: 20, img: "images/product-20.jpg", name: "Línea Rota", cat: "Estampadas", price: 90000, color: "#15181c", ink: "#ecebe6", art: "grid" },
+  { id: 21, img: "images/product-21.jpg", name: "Vino", cat: "Básicas", price: 90000, color: "#5a1f2e", ink: "#f4f3ee", art: "logo" },
+  { id: 22, img: "images/product-22.jpg", name: "Órbita Azul", cat: "Estampadas", price: 90000, color: "#2f54ff", ink: "#f4f3ee", art: "circle" },
+  { id: 23, img: "images/product-23.jpg", name: "Gris Perla", cat: "Básicas", price: 90000, color: "#b9bec4", ink: "#0b0d10", art: "none" },
+  { id: 24, img: "images/product-24.jpg", name: "Franja Verde", cat: "Estampadas", price: 90000, color: "#3c4a37", ink: "#f4f3ee", art: "stripe" },
+  { id: 25, img: "images/product-25.jpg", name: "Café Tierra", cat: "Básicas", price: 90000, color: "#5b4636", ink: "#f4f3ee", art: "logo" }
+];
+var cats = ["Todas", "Básicas", "Estampadas"];
+var filter = "Todas";
+var cart = [];
+
+function money(n) { return "$" + n.toLocaleString("es-CO"); }
+
+function tee(p) {
+  if (p.img) {
+    return '<img src="' + p.img + '" alt="Camiseta ' + p.name + '" onerror="this.onerror=null;this.parentNode.innerHTML=teeFallback(' + p.id + ');">';
+  }
+  return teeFallback(p.id);
+}
+
+function teeFallback(id) {
+  var p = PRODUCTS.filter(function (x) { return x.id === id; })[0];
+  var art = "";
+  if (p.art === "circle") {
+    art = '<circle cx="100" cy="96" r="26" fill="none" stroke="' + p.ink + '" stroke-width="2.4"/><circle cx="112" cy="90" r="8" fill="' + p.ink + '"/><path d="M62 140H138" stroke="' + p.ink + '" stroke-width="1.6"/>';
+  } else if (p.art === "stripe") {
+    art = '<rect x="52" y="86" width="96" height="9" fill="' + p.ink + '"/><rect x="52" y="102" width="96" height="3" fill="' + p.ink + '"/>';
+  } else if (p.art === "logo") {
+    art = '<text x="100" y="78" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" font-size="20" letter-spacing="2" fill="' + p.ink + '">OFFGRID</text>';
+  } else if (p.art === "grid") {
+    art = '<g stroke="' + p.ink + '" stroke-width="1.6" fill="none">' +
+      '<path d="M72 70H128M72 88H108M72 106H128M72 124H128"/>' +
+      '<path d="M82 62V132M100 62V132M118 62V100"/></g>' +
+      '<path d="M118 112L146 96" stroke="' + p.ink + '" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<circle cx="148" cy="95" r="3.4" fill="' + p.ink + '"/>';
+  }
+  return '<svg viewBox="0 0 200 220" role="img" aria-label="Camiseta ' + p.name + '">' +
+    '<path d="M70 14L30 34L8 82L40 96L52 78V206H148V78L160 96L192 82L170 34L130 14C124 30 76 30 70 14Z" fill="' + p.color + '"/>' +
+    '<path d="M52 78V206M148 78V206" stroke="rgba(0,0,0,.14)" stroke-width="1"/>' +
+    '<path d="M70 14C76 30 124 30 130 14" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="3"/>' +
+    art + '</svg>';
+}
+
+function renderChips() {
+  var el = document.getElementById("chips");
+  el.innerHTML = cats.map(function (c) {
+    return '<button type="button" class="chip" data-cat="' + c + '" aria-pressed="' + (c === filter) + '">' + c + '</button>';
+  }).join("");
+}
+
+function renderGrid() {
+  var list = PRODUCTS.filter(function (p) { return filter === "Todas" || p.cat === filter; });
+  document.getElementById("grid").innerHTML = list.map(function (p) {
+    return '<article class="card">' +
+      '<div class="pic"><span class="tag">' + p.cat + '</span>' + tee(p) + '</div>' +
+      '<div class="info">' +
+      '<div class="row"><h4 class="name">' + p.name + '</h4><span class="price">' + money(p.price) + '</span></div>' +
+      '<button type="button" class="add" data-add="' + p.id + '">Agregar al carrito</button>' +
+      '</div></article>';
+  }).join("");
+}
+
+function toast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(toast.h);
+  toast.h = setTimeout(function () { t.classList.remove("on"); }, 1800);
+}
+
+function renderCart() {
+  var count = cart.reduce(function (a, l) { return a + l.qty; }, 0);
+  document.getElementById("count").textContent = count;
+  var linesEl = document.getElementById("lines");
+  var total = 0;
+  if (!cart.length) {
+    linesEl.innerHTML = '<p class="empty">Tu carrito está vacío. Agrega una camiseta del catálogo.</p>';
+  } else {
+    linesEl.innerHTML = cart.map(function (l, i) {
+      var p = PRODUCTS.filter(function (x) { return x.id === l.id; })[0];
+      total += p.price * l.qty;
+      return '<div class="line"><div class="th">' + tee(p) + '</div>' +
+        '<div class="t"><b>' + p.name + '</b><span>' + money(p.price) + '</span>' +
+        '<div class="qty"><button type="button" data-q="-1" data-i="' + i + '" aria-label="Quitar una">−</button><span>' + l.qty + '</span><button type="button" data-q="1" data-i="' + i + '" aria-label="Agregar una">+</button></div></div>' +
+        '<span class="price">' + money(p.price * l.qty) + '</span></div>';
+    }).join("");
+  }
+  document.getElementById("total").textContent = money(total);
+  var a1 = document.getElementById("checkout1");
+  var a2 = document.getElementById("checkout2");
+  if (cart.length) {
+    var msg = "Hola OFFGRID, quiero hacer este pedido con pago contra entrega:\n" +
+      cart.map(function (l) {
+        var p = PRODUCTS.filter(function (x) { return x.id === l.id; })[0];
+        return "• " + l.qty + " x " + p.name + " - " + money(p.price * l.qty);
+      }).join("\n") + "\nTotal: " + money(total);
+    var encodedMsg = encodeURIComponent(msg);
+    a1.href = "https://wa.me/" + WHATSAPP_1 + "?text=" + encodedMsg;
+    a2.href = "https://wa.me/" + WHATSAPP_2 + "?text=" + encodedMsg;
+    a1.setAttribute("aria-disabled", "false");
+    a2.setAttribute("aria-disabled", "false");
+  } else {
+    a1.href = "#";
+    a2.href = "#";
+    a1.setAttribute("aria-disabled", "true");
+    a2.setAttribute("aria-disabled", "true");
+  }
+}
+
+function openCart(open) {
+  document.getElementById("drawer").hidden = !open;
+  document.getElementById("scrim").hidden = !open;
+}
+
+document.getElementById("chips").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-cat]");
+  if (!b) return;
+  filter = b.getAttribute("data-cat");
+  renderChips();
+  renderGrid();
+});
+
+document.getElementById("grid").addEventListener("click", function (e) {
+  var add = e.target.closest("[data-add]");
+  if (add) {
+    var id = Number(add.getAttribute("data-add"));
+    var found = cart.filter(function (l) { return l.id === id; })[0];
+    if (found) found.qty += 1; else cart.push({ id: id, qty: 1 });
+    renderCart();
+    toast("Agregada al carrito");
+  }
+});
+
+document.getElementById("lines").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-q]");
+  if (!b) return;
+  var i = Number(b.getAttribute("data-i"));
+  cart[i].qty += Number(b.getAttribute("data-q"));
+  if (cart[i].qty <= 0) cart.splice(i, 1);
+  renderCart();
+});
+
+document.getElementById("openCart").addEventListener("click", function () { openCart(true); });
+document.getElementById("closeCart").addEventListener("click", function () { openCart(false); });
+document.getElementById("scrim").addEventListener("click", function () { openCart(false); });
+document.addEventListener("keydown", function (e) { if (e.key === "Escape") openCart(false); });
+
+// Banner desplazable
+(function () {
+  var banner = document.getElementById("banner");
+  var track = document.getElementById("track");
+  var dotsEl = document.getElementById("dots");
+  var n = track.children.length;
+  var cur = 0;
+  var timer = null;
+  var DELAY = 5500;
+
+  dotsEl.innerHTML = Array.apply(null, Array(n)).map(function (_, i) {
+    return '<button type="button" class="dot" data-i="' + i + '" aria-label="Ir a la diapositiva ' + (i + 1) + '"><i></i></button>';
+  }).join("");
+
+  function go(i) {
+    cur = (i + n) % n;
+    track.style.transform = "translateX(" + (-100 * cur) + "%)";
+    Array.prototype.forEach.call(dotsEl.children, function (d, k) {
+      d.classList.remove("on");
+      if (k === cur) { void d.offsetWidth; d.classList.add("on"); }
+    });
+    schedule();
+  }
+  function schedule() {
+    clearTimeout(timer);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    timer = setTimeout(function () { go(cur + 1); }, DELAY);
+  }
+  function pause() { clearTimeout(timer); banner.classList.add("paused"); }
+  function resume() { banner.classList.remove("paused"); schedule(); }
+
+  dotsEl.addEventListener("click", function (e) {
+    var d = e.target.closest(".dot");
+    if (d) go(Number(d.getAttribute("data-i")));
+  });
+  document.getElementById("prev").addEventListener("click", function () { go(cur - 1); });
+  document.getElementById("next").addEventListener("click", function () { go(cur + 1); });
+  banner.addEventListener("mouseenter", pause);
+  banner.addEventListener("mouseleave", resume);
+
+  var sx = null;
+  banner.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; pause(); }, { passive: true });
+  banner.addEventListener("touchend", function (e) {
+    if (sx !== null) {
+      var dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 40) go(dx < 0 ? cur + 1 : cur - 1); else resume();
+    }
+    sx = null;
+  });
+  go(0);
+})();
+
+renderChips();
+renderGrid();
+renderCart();
+</script>
+
+</body></html>
